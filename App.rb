@@ -1,11 +1,11 @@
 # This application will run a hangman game where user enters letters to match a hidden word
 
 require "json"
-require_relative "User.rb"
-require_relative "Tools.rb"
+require_relative "src/User.rb"
+require_relative "src/Tools.rb"
 include Tools
 
-file = File.read("words.json")
+file = File.read("src/words.json")
 words = JSON.parse(file)
 user = User.new()
 
