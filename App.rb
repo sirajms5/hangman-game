@@ -9,7 +9,6 @@ print "Enter how many letters a word can have (4, 5, 6, 7): "
 letter_count = gets.chomp()
 word = words[letter_count][rand(0..49)].downcase()
 correct_answers = []
-lives = 7
 
 # Methods_factory.correct_letters(letter_count.to_i, correct_answers) # to show correct letters and their position in the word
 
@@ -41,20 +40,39 @@ def get_letter()
     end while !is_valid
     return choice
 end
-    
-# todo: construct a loop that goes through duplicate letters
-i = 30
+
+def show_answer(letter_count, correct_answers)
+    letter_count.to_i.times do |index|
+        if correct_answers[index] != nil
+            print correct_answers[index]
+        else
+            print "_ "
+        end
+    end
+    puts ""
+end
+
+lives = 10
 begin    
     choice = get_letter().downcase()
     is_correct_choice = word.include? choice
     if is_correct_choice
-        index = word.index(choice)
-        word[index] = "-"
-        puts word
+        word.each_char().with_index() do |character, index|
+            if character == choice
+                correct_answers[index] = character
+            end
+        end
     else
         puts "wrong answer"
     end
-    i -= 1
-end while i > 5
+    show_answer(letter_count, correct_answers)
+    lives -= 1
+end while lives >= 0 && (correct_answers.include? "_ ")
+
+if !(correct_answers.include? "_ ")
+    puts "Congratulations! You WON!"
+else
+    puts "You ran our of lives. Correct answer is: #{word}"
+end
     
     
